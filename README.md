@@ -2,6 +2,9 @@
 
 # Circuits
 [Circuits overview](#circuits-overview)
+[2-to-4 decoder](#2-to-4-decoder)
+[D-latch](#d-latch)
+[D-latch (NAND)](#d-latch-nand)
 
 ## Circuits overview
 File: [circuits-overview.tex](https://github.com/bkmarzec/latex-snippets/blob/master/circuits/circuits-overview.tex)
