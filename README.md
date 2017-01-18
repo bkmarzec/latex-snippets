@@ -4,7 +4,7 @@
 
 ## 2-to-4 decoder
 
-![alt text](https://github.com/ "2-to-4 decoder")
+![alt text](https://github.com/bkmarzec/latex-snippets/blob/master/circuits/2-zu-4-decoder.png "2-to-4 decoder")
 
 ```tex
 \begin{tikzpicture}[circuit logic US, every circuit symbol/.style={logic gate IEC symbol color=black,fill=black!5,draw=black}]
