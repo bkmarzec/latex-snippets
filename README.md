@@ -4,6 +4,7 @@
 
 ## Circuits overview
 File: [circuits-overview.tex](https://github.com/bkmarzec/latex-snippets/blob/master/circuits/circuits-overview.tex)
+
 ![alt text](https://github.com/bkmarzec/latex-snippets/blob/master/circuits/circuits-overview.png "Circuits overview")
 
 ## 2-to-4 decoder
