@@ -1,0 +1,79 @@
+\documentclass{minimal}
+
+\usepackage{tikz}
+\usetikzlibrary{spy}
+
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+
+\usetikzlibrary{shapes,decorations,shadows}
+\usetikzlibrary{shapes.gates.logic.IEC}
+\usetikzlibrary{circuits.logic.IEC}
+\usetikzlibrary{circuits.ee.IEC}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{shapes.gates.logic.US}
+\usetikzlibrary{positioning,calc}
+\usetikzlibrary{backgrounds}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{comment}
+2 zu 4 Dekodierer
+\end{comment}
+
+\begin{tikzpicture}[
+  circuit logic IEC, 
+  every circuit symbol/.style={logic gate IEC symbol color=black,fill=black!5,draw=black}, 
+  circuit declare symbol=multi,
+  set multi graphic={draw,shape=rectangle,minimum height=1.5cm, minimum width=1cm},
+  circuit declare symbol = ha,
+  set ha graphic = {draw,shape=rectangle,minimum height=0.75cm, minimum width=0.75cm},
+  circuit declare symbol = fa,
+  set fa graphic = {draw,shape=rectangle,minimum height=1cm, minimum width=1cm},
+  font=\sffamily,
+  active/.style={very thick, red},%very thick, red
+  rot/.style={black},%red
+  blau/.style={black},%blue
+  gruen/.style={black},%green
+  node distance=1cm,
+]
+
+\node[nand gate] at (5,5) (nor1) {T};
+\node[nand gate, below = of nor1] (nor2) {W};
+
+
+\node[nand gate, left = of nor1.input 1] (and1) {S};
+\node[nand gate, left = of nor2.input 2] (and2) {U};
+
+%\node[not gate, left = of and2.input 2] (not1) {};
+\node[left = 2.5cm of and1.input 1] (label1) {$D$};
+\node[below = 0.25cm of and1, xshift=-3.0cm] (label2) {$CK$};
+
+\node[right = of nor1.output] (label3) {$Q$};
+\node[right = of nor2.output] (label4) {$\overline{Q}$};
+
+
+\draw
+  (label1) -- ++ (right:0.5cm) |- (and1.input 1)
+  (label2) -- ++ (right:2cm) |- (and1.input 2)
+  (label2) -- ++ (right:2cm) |- (and2.input 2)
+  (and1.output) -- (nor1.input 1)
+  (and2.output) -- (nor2.input 2)
+  (nor1.output) -- (label3)
+  (nor2.output) -- (label4)
+  ($(nor1.output)+(0.25,0)$) -- ++ (down:0.5cm) -- ($(nor2.north)-(0.75,0)$) --++ (down:0.325cm) -- (nor2.input 1)
+  ($(nor2.output)+(0.25,0)$) -- ++ (up:0.5cm) -- ($(nor1.south)-(0.75,0)$) --++ (up:0.325cm) -- (nor1.input 2)
+  ($(and1.output)+(0.20,0)$) -- ++ (down:0.5cm) -- ($(and2.north west)-(0.2,0)$) --++ (down:0.325cm) |- (and2.input 1);
+
+;
+\fill
+  ($(label2)+(2,0)$) circle (2pt)
+  ($(nor1.output)+(0.25,0)$) circle (2pt)
+  ($(nor2.output)+(0.25,0)$) circle (2pt)
+  ($(and1.output)+(0.20,0)$) circle (2pt)
+;
+
+\end{tikzpicture}
+\end{document}
