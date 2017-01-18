@@ -1,0 +1,89 @@
+% Venn diagram with magnifier
+% Author: Dennis Heidsiek
+\documentclass{minimal}
+
+\usepackage{tikz}
+\usetikzlibrary{spy}
+
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+
+\usetikzlibrary{shapes,decorations,shadows}
+\usetikzlibrary{shapes.gates.logic.IEC}
+\usetikzlibrary{circuits.logic.IEC}
+\usetikzlibrary{circuits.ee.IEC}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{shapes.gates.logic.US}
+\usetikzlibrary{positioning,calc}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{comment}
+2 zu 4 Dekodierer
+\end{comment}
+
+\begin{center}
+\begin{tikzpicture}[font=\sffamily, every circuit symbol/.style={logic gate IEC symbol color=black,fill=black!5,draw=black}]
+\matrix[circuit logic US, row sep=0.3cm,column sep=0.3cm,minimum width=2cm, minimum height=1cm] (m1) {
+  \node{NOT}; & \node{AND}; & \node{NAND}; 
+  & \node{OR}; &  \node{NOR}; & \node{XOR}; \\
+  \node[not gate] (us1) {}; & \node[and gate] (us2) {}; & \node[nand gate] (us3) {}; & \node[or gate] (us4) {}; & \node[nor gate] (us5) {}; & \node[xor gate] (us6) {}; \\
+  \node[circuit logic IEC, not gate] (iec1) {}; & \node[circuit logic IEC, and gate] (iec2) {}; & \node[circuit logic IEC, nand gate] (iec3) {}; & \node[circuit logic IEC, or gate] (iec4) {}; & \node[circuit logic IEC, nor gate] (iec5) {}; & \node[circuit logic IEC, xor gate] (iec6) {}; \\
+};
+
+\path[-, draw=black]
+  %NOT
+  ($(us1.input)-(2mm,0)$) edge node[left] {$A$} (us1.input)
+  (us1.output) edge node[right] {$X$} ($(us1.output)+(2mm,0)$)
+  %AND
+  ($(us2.input 1)-(2mm,-1mm)$) edge node[left] {$A$} ($(us2.input 1)+(0,1mm)$)
+  ($(us2.input 2)-(2mm,1mm)$) edge node[left] {$B$} ($(us2.input 2)-(0,1mm)$)
+  (us2.output) edge node[right] {$X$} ($(us2.output)+(2mm,0)$)
+  %NAND
+  ($(us3.input 1)-(2mm,-1mm)$) edge node[left] {$A$} ($(us3.input 1)+(0,1mm)$)
+  ($(us3.input 2)-(2mm,1mm)$) edge node[left] {$B$} ($(us3.input 2)-(0,1mm)$)
+  (us3.output) edge node[right] {$X$} ($(us3.output)+(2mm,0)$)
+  %OR
+  ($(us4.input 1)-(2mm,-1mm)$) edge node[left] {$A$} ($(us4.input 1)+(0,1mm)$)
+  ($(us4.input 2)-(2mm,1mm)$) edge node[left] {$B$} ($(us4.input 2)-(0,1mm)$)
+  (us4.output) edge node[right] {$X$} ($(us4.output)+(2mm,0)$)
+  %NOR
+  ($(us5.input 1)-(2mm,-1mm)$) edge node[left] {$A$} ($(us5.input 1)+(0,1mm)$)
+  ($(us5.input 2)-(2mm,1mm)$) edge node[left] {$B$} ($(us5.input 2)-(0,1mm)$)
+  (us5.output) edge node[right] {$X$} ($(us5.output)+(2mm,0)$)
+  %XOR
+  ($(us6.input 1)-(2mm,-1mm)$) edge node[left] {$A$} ($(us6.input 1)+(0,1mm)$)
+  ($(us6.input 2)-(2mm,1mm)$) edge node[left] {$B$} ($(us6.input 2)-(0,1mm)$)
+  (us6.output) edge node[right] {$X$} ($(us6.output)+(2mm,0)$)
+;
+\path[-, draw=black]
+  %NOT
+  ($(iec1.input)-(2mm,0)$) edge node[left] {$A$} (iec1.input)
+  (iec1.output) edge node[right] {$X$} ($(iec1.output)+(2mm,0)$)
+  %AND
+  ($(iec2.input 1)-(2mm,0)$) edge node[left] {$A$} (iec2.input 1)
+  ($(iec2.input 2)-(2mm,0)$) edge node[left] {$B$} (iec2.input 2)
+  (iec2.output) edge node[right] {$X$} ($(iec2.output)+(2mm,0)$)
+  %NAND
+  ($(iec3.input 1)-(2mm,0)$) edge node[left] {$A$} (iec3.input 1)
+  ($(iec3.input 2)-(2mm,0)$) edge node[left] {$B$} (iec3.input 2)
+  (iec3.output) edge node[right] {$X$} ($(iec3.output)+(2mm,0)$)
+  %OR
+  ($(iec4.input 1)-(2mm,0)$) edge node[left] {$A$} (iec4.input 1)
+  ($(iec4.input 2)-(2mm,0)$) edge node[left] {$B$} (iec4.input 2)
+  (iec4.output) edge node[right] {$X$} ($(iec4.output)+(2mm,0)$)
+  %NOR
+  ($(iec5.input 1)-(2mm,0)$) edge node[left] {$A$} (iec5.input 1)
+  ($(iec5.input 2)-(2mm,0)$) edge node[left] {$B$} (iec5.input 2)
+  (iec5.output) edge node[right] {$X$} ($(iec5.output)+(2mm,0)$)
+  %XOR
+  ($(iec6.input 1)-(2mm,0)$) edge node[left] {$A$} (iec6.input 1)
+  ($(iec6.input 2)-(2mm,0)$) edge node[left] {$B$} (iec6.input 2)
+  (iec6.output) edge node[right] {$X$} ($(iec6.output)+(2mm,0)$)
+;
+
+\end{tikzpicture}
+\end{center}
+\end{document}
