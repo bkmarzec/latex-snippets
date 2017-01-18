@@ -1,6 +1,7 @@
 # latex-snippets
 
 # Circuits
+[Circuits overview](#circuits-overview)
 
 ## Circuits overview
 File: [circuits-overview.tex](https://github.com/bkmarzec/latex-snippets/blob/master/circuits/circuits-overview.tex)
