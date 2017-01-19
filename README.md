@@ -6,7 +6,7 @@
 * [D-latch](#d-latch)
 * [D-latch (NAND)](#d-latch-nand)
 * [Nibble memory](#nibble-memory)
-* [Nibble memory](#nibble-memory-example)
+* [Nibble memory (example)](#nibble-memory-example)
 
 ## Circuits overview
 File: [circuits-overview.tex](https://github.com/bkmarzec/latex-snippets/blob/master/circuits/circuits-overview.tex)
