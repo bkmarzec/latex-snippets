@@ -1,0 +1,189 @@
+\documentclass{minimal}
+
+\usepackage{tikz}
+\usetikzlibrary{spy}
+
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+
+\usetikzlibrary{shapes,decorations,shadows}
+\usetikzlibrary{shapes.gates.logic.IEC}
+\usetikzlibrary{circuits.logic.IEC}
+\usetikzlibrary{circuits.ee.IEC}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{shapes.gates.logic.US}
+\usetikzlibrary{positioning,calc}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{comment}
+2 zu 4 Dekodierer
+\end{comment}
+
+\begin{tikzpicture}[circuit logic US, every circuit symbol/.style={logic gate IEC symbol color=black,fill=black!5,draw=black},circuit declare symbol=mem,set mem graphic={draw,shape=rectangle,minimum height=1.5cm, minimum width=2cm}, circuit declare symbol=bt,set bt graphic={draw,shape=rectangle,minimum height=1.5cm, minimum width=2cm}, circuit declare symbol=dec,set dec graphic={draw,shape=rectangle,minimum height=1cm, minimum width=4cm}, font=\sffamily]
+
+\node[mem] (m0) {$M_0$};
+\node[mem, left = of m0] (m1) {$M_1$};
+\node[mem, left = of m1] (m2) {$M_2$};
+\node[mem, left = of m2] (m3) {$M_3$};
+
+%
+% Steuerbus
+%
+\node[black] at ($(m3.west)+(-2,3)$) (label1) {$A_3$}; \node[white] at ($(m0.east)+(2,3)$) (label2) {$0$};
+\node[black] at ($(m3.west)+(-2,2.5)$) (label3) {$A_2$}; \node[white] at ($(m0.east)+(2,2.5)$) (label4) {$0$};
+\node[black] at ($(m3.west)+(-2,2)$) (label5) {$A_1$}; \node[white] at ($(m0.east)+(2,2)$) (label6) {$0$};
+\node[black] at ($(m3.west)+(-2,1.5)$) (label7) {$A_0$}; \node[white] at ($(m0.east)+(2,1.5)$) (label8) {$0$};
+\path[draw=black]
+  (label1) -- (label2)
+  (label3) -- (label4)
+  (label5) -- (label6)
+  (label7) -- (label8)
+;
+\path[draw=black]
+  ($(m3.north)+(0.75,0)$) -- ($(m3.north)+(0.75,0.75)$)
+  ($(m3.north)+(0.25,0)$) -- ($(m3.north)+(0.25,1.25)$)
+  ($(m2.north)+(0.75,0)$) -- ($(m2.north)+(0.75,0.75)$)
+  ($(m2.north)+(0.25,0)$) -- ($(m2.north)+(0.25,1.25)$)
+  ($(m1.north)+(0.75,0)$) -- ($(m1.north)+(0.75,0.75)$)
+  ($(m1.north)+(0.25,0)$) -- ($(m1.north)+(0.25,1.25)$)
+  ($(m0.north)+(0.75,0)$) -- ($(m0.north)+(0.75,0.75)$)
+  ($(m0.north)+(0.25,0)$) -- ($(m0.north)+(0.25,1.25)$)
+;
+\fill[black] 
+  ($(m3.north)+(0.25,1.25)$) circle (2pt) ($(m3.north)+(0.75,0.75)$) circle (2pt)
+  ($(m2.north)+(0.25,1.25)$) circle (2pt) ($(m2.north)+(0.75,0.75)$) circle (2pt)
+  ($(m1.north)+(0.25,1.25)$) circle (2pt) ($(m1.north)+(0.75,0.75)$) circle (2pt)
+  ($(m0.north)+(0.25,1.25)$) circle (2pt) ($(m0.north)+(0.75,0.75)$) circle (2pt)
+;
+
+%
+% Datenbus
+%
+\node[black] at ($(m3.west)+(-2,-11)$) (label9) {$D_3$}; \node[white] at ($(m0.east)+(2,-11)$) (label10) {$0$};
+\node[black] at ($(m3.west)+(-2,-11.5)$) (label11) {$D_2$}; \node[white] at ($(m0.east)+(2,-11.5)$) (label12) {$0$};
+\node[black] at ($(m3.west)+(-2,-12)$) (label13) {$D_1$}; \node[white] at ($(m0.east)+(2,-12)$) (label14) {$0$};
+\node[black] at ($(m3.west)+(-2,-12.5)$) (label15) {$D_0$}; \node[white] at ($(m0.east)+(2,-12.5)$) (label16) {$0$};
+\path[draw=black]
+  (label9) -- (label10)
+  (label11) -- (label12)
+  (label13) -- (label14)
+  (label15) -- (label16)
+;
+
+\node[bt, below = 1cm of m3] (t3) {$T_3$};
+\node[bt, below = 2cm of m2] (t2) {$T_2$};
+\node[bt, below = 3cm of m1] (t1) {$T_1$};
+\node[bt, below = 4cm of m0] (t0) {$T_0$};
+
+\path[draw=black]
+  ($(m3.south)+(-.75,0)$) -- ($(t3.north)+(-.75,0)$) ($(m3.south)+(-.25,0)$) -- ($(t3.north)+(-.25,0)$) ($(m3.south)+(.25,0)$) -- ($(t3.north)+(.25,0)$) ($(m3.south)+(.75,0)$) -- ($(t3.north)+(.75,0)$)
+  ($(m2.south)+(-.75,0)$) -- ($(t2.north)+(-.75,0)$) ($(m2.south)+(-.25,0)$) -- ($(t2.north)+(-.25,0)$) ($(m2.south)+(.25,0)$) -- ($(t2.north)+(.25,0)$) ($(m2.south)+(.75,0)$) -- ($(t2.north)+(.75,0)$)
+  ($(m1.south)+(-.75,0)$) -- ($(t1.north)+(-.75,0)$) ($(m1.south)+(-.25,0)$) -- ($(t1.north)+(-.25,0)$) ($(m1.south)+(.25,0)$) -- ($(t1.north)+(.25,0)$) ($(m1.south)+(.75,0)$) -- ($(t1.north)+(.75,0)$)
+  ($(m0.south)+(-.75,0)$) -- ($(t0.north)+(-.75,0)$) ($(m0.south)+(-.25,0)$) -- ($(t0.north)+(-.25,0)$) ($(m0.south)+(.25,0)$) -- ($(t0.north)+(.25,0)$) ($(m0.south)+(.75,0)$) -- ($(t0.north)+(.75,0)$)
+;
+
+\node[or gate, below right = 2mm of t0, inputs={nnnn}, yshift=-5mm] (or1) {};
+\node[or gate, below left = 5mm of or1, inputs={nnnn}, xshift=5mm] (or2) {};
+\node[or gate, below left = 5mm of or2, inputs={nnnn}, xshift=5mm] (or3) {};
+\node[or gate, below left = 5mm of or3, inputs={nnnn}, xshift=5mm] (or4) {};
+
+%
+% 2-zu-4 Decodierer
+%
+\node[dec, left = 1cm of t3, rotate=90, xshift=5mm] (deco) {2-zu-4 Decodierer};
+
+% T3-zu or gates
+\path[draw] ($(t3.south)+(-.75, 0)$)  |- (or4.input 4);
+\path[draw] ($(t3.south)+(-.25, 0)$)  |- (or3.input 4);
+\path[draw] ($(t3.south)+(.25, 0)$)  |- (or2.input 4);
+\path[draw] ($(t3.south)+(.75, 0)$)  |- (or1.input 4);
+% T2-zu or gates
+\path[draw] ($(t2.south)+(-.75, 0)$)  |- (or4.input 3);
+\path[draw] ($(t2.south)+(-.25, 0)$)  |- (or3.input 3);
+\path[draw] ($(t2.south)+(.25, 0)$)  |- (or2.input 3);
+\path[draw] ($(t2.south)+(.75, 0)$)  |- (or1.input 3);
+% T1-zu or gates
+\path[draw] ($(t1.south)+(-.75, 0)$)  |- (or4.input 2);
+\path[draw] ($(t1.south)+(-.25, 0)$)  |- (or3.input 2);
+\path[draw] ($(t1.south)+(.25, 0)$)  |- (or2.input 2);
+\path[draw] ($(t1.south)+(.75, 0)$)  |- (or1.input 2);
+% T0-zu or gates
+\path[draw] ($(t0.south)+(-.75, 0)$)  |- (or4.input 1);
+\path[draw] ($(t0.south)+(-.25, 0)$)  |- (or3.input 1);
+\path[draw] ($(t0.south)+(.25, 0)$)  |- (or2.input 1);
+\path[draw] ($(t0.south)+(.75, 0)$)  |- (or1.input 1);
+
+%Or's zu Datenbus
+\path[draw=black]
+  (or1.output) -- ++(right:5mm) |- ($(label16)-(3mm,0)$)
+  (or2.output) -- ++(right:5mm) |- ($(label14)-(9mm,0)$)
+  (or3.output) -- ++(right:5mm) |- ($(label12)-(16mm,0)$)
+  (or4.output) -- ++(right:5mm) |- ($(label10)-(22mm,0)$)
+;
+\fill[black]
+  ($(label16)-(3mm,0)$) circle (2pt)
+  ($(label14)-(9.5mm,0)$) circle (2pt)
+  ($(label12)-(15.5mm,0)$) circle (2pt)
+  ($(label10)-(22mm,0)$) circle (2pt)
+;
+
+
+%
+% T's zu 2-zu-4 Dekodierer
+%
+\draw[black]
+  (t3) -- ($(deco.south)+(0,1.5)$)
+  (t2) -- ($(deco.south)+(0,0.5)$)
+  (t1) -- ($(deco.south)+(0,-0.5)$)
+  (t0) -- ($(deco.south)+(0,-1.5)$)
+;
+
+%
+% Adressbus zu 2-zu-4-Dekodierer
+%
+\draw
+  ($(deco.east)-(0.25,0)$) -- ($(deco.east)-(0.25,-5)$)
+  ($(deco.east)-(-0.25,0)$) -- ($(deco.east)-(-0.25,-4.5)$)
+;
+\fill[black]
+  ($(deco.east)-(0.25,-5)$) circle (2pt)
+  ($(deco.east)-(-0.25,-4.5)$) circle (2pt)
+;
+
+%Beschriftungen
+\node at ($(deco.east)+(0.45,0.15)$) {\fontsize{9}{0} \selectfont $E_0$};
+\node at ($(deco.east)+(-0.05,0.15)$) {\fontsize{9}{0} \selectfont $E_1$};
+\node at ($(deco.south)+(0.15,1.3)$) {\fontsize{9}{0} \selectfont $F_0$};
+\node at ($(deco.south)+(0.15,0.3)$) {\fontsize{9}{0} \selectfont $F_1$};
+\node at ($(deco.south)+(0.15,-0.7)$) {\fontsize{9}{0} \selectfont $F_2$};
+\node at ($(deco.south)+(0.15,-1.7)$) {\fontsize{9}{0} \selectfont $F_3$};
+\node at ($(m1.south)+(-.6,-.2)$) {\fontsize{9}{0} \selectfont $B_3$};
+\node at ($(m1.south)+(-.1,-.2)$) {\fontsize{9}{0} \selectfont $B_2$};
+\node at ($(m1.south)+(.4,-.2)$) {\fontsize{9}{0} \selectfont $B_1$};
+\node at ($(m1.south)+(.9,-.2)$) {\fontsize{9}{0} \selectfont $B_0$};
+\node at ($(m1.north)+(0.9,.2)$) {\fontsize{9}{0} \selectfont $A_0$};
+\node at ($(m1.north)+(0.4,.2)$) {\fontsize{9}{0} \selectfont $A_1$};
+\node at ($(m0.south)+(-.6,-.2)$) {\fontsize{9}{0} \selectfont $B_3$};
+\node at ($(m0.south)+(-.1,-.2)$) {\fontsize{9}{0} \selectfont $B_2$};
+\node at ($(m0.south)+(.4,-.2)$) {\fontsize{9}{0} \selectfont $B_1$};
+\node at ($(m0.south)+(.9,-.2)$) {\fontsize{9}{0} \selectfont $B_0$};
+\node at ($(m0.north)+(0.9,.2)$) {\fontsize{9}{0} \selectfont $A_0$};
+\node at ($(m0.north)+(0.4,.2)$) {\fontsize{9}{0} \selectfont $A_1$};
+\node at ($(m2.south)+(-.6,-.2)$) {\fontsize{9}{0} \selectfont $B_3$};
+\node at ($(m2.south)+(-.1,-.2)$) {\fontsize{9}{0} \selectfont $B_2$};
+\node at ($(m2.south)+(.4,-.2)$) {\fontsize{9}{0} \selectfont $B_1$};
+\node at ($(m2.south)+(.9,-.2)$) {\fontsize{9}{0} \selectfont $B_0$};
+\node at ($(m2.north)+(0.9,.2)$) {\fontsize{9}{0} \selectfont $A_0$};
+\node at ($(m2.north)+(0.4,.2)$) {\fontsize{9}{0} \selectfont $A_1$};
+\node at ($(m3.south)+(-.6,-.2)$) {\fontsize{9}{0} \selectfont $B_3$};
+\node at ($(m3.south)+(-.1,-.2)$) {\fontsize{9}{0} \selectfont $B_2$};
+\node at ($(m3.south)+(.4,-.2)$) {\fontsize{9}{0} \selectfont $B_1$};
+\node at ($(m3.south)+(.9,-.2)$) {\fontsize{9}{0} \selectfont $B_0$};
+\node at ($(m3.north)+(0.9,.2)$) {\fontsize{9}{0} \selectfont $A_0$};
+\node at ($(m3.north)+(0.4,.2)$) {\fontsize{9}{0} \selectfont $A_1$};
+
+\end{tikzpicture}
+\end{document}
